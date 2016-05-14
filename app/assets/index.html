@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+
+<head>
+    <base href="./">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width" initial-scale="1.0">
+    <meta name="description" content="An opinionated AngularJS skeleton for Brunch">
+    <meta name="author" content="Row1">
+
+    <title>Brunch Arrogantular :: {{$state.current.data.pageTitle}}</title>
+    <link rel="stylesheet" href="stylesheets/vendor.css?DIGEST">
+    <link rel="stylesheet" href="stylesheets/app.css?DIGEST">
+</head>
+
+<body layout="column">
+
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <span><a ui-sref='home'>Simplex</a></span>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="column" flex class="md-padding" ng-class="$state.current.data.viewClass" ui-view="main">
+    </md-content>
+
+    <script src="javascript/vendor.js?DIGEST"></script>
+    <script src="javascript/templates.js?DIGEST"></script>
+    <script src="javascript/app.js?DIGEST"></script>
+</body>
+
+</html>
