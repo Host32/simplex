@@ -1,0 +1,7 @@
+<h3>Função objetivo</h3>
+<p>
+    {{objective}} z =
+    <span ng-repeat="decisionVar in decisionVars">
+        {{decisionVar.value}}*x{{$index + 1}} <span ng-if="decisionVars[$index+1] && decisionVars[$index+1].value >= 0">+</span>
+    </span>
+</p>

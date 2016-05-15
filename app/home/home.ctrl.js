@@ -9,7 +9,8 @@
             $scope.initial = {
                 decisionVars: 2,
                 restrictions: 3,
-                objective: 'max'
+                objective: 'max',
+                iterationLimit: 5
             };
 
             function generateRestrictions(amount) {
@@ -20,27 +21,33 @@
                         condition: 'menor',
                         decisionVars: [
                             {
+                                value: 1
+                            }, {
+                                value: 1
+                            }, {
+                                value: 1
+                            }
+                        ]
+                    }, {
+                        value: 12,
+                        condition: 'menor',
+                        decisionVars: [
+                            {
                                 value: 2
+                            }, {
+                                value: 1
                             }, {
                                 value: 4
                             }
                         ]
                     }, {
-                        value: 20,
+                        value: 9,
                         condition: 'menor',
                         decisionVars: [
                             {
-                                value: 6
+                                value: 1
                             }, {
-                                value: 1
-                            }
-                        ]
-                    }, {
-                        value: 30,
-                        condition: 'menor',
-                        decisionVars: [
-                            {
-                                value: 1
+                                value: 3
                             }, {
                                 value: -1
                             }
@@ -72,9 +79,11 @@
 
                 $scope.decisionVars = [
                     {
-                        value: 3
+                        value: 1
                     }, {
-                        value: 5
+                        value: 2
+                    }, {
+                        value: 3
                     }
                 ];
                 return;
@@ -192,9 +201,8 @@
                     continua: continua
                 });
 
-                var limit = 5;
-                var iteration = 1;
-                while (continua && iteration < limit) {
+                var iteration = 0;
+                while (continua && iteration < $scope.initial.iterationLimit) {
                     var enterVar = enterVariable(tabela);
                     var exitVar = exitVariable(tabela, enterVar);
 
@@ -214,7 +222,6 @@
                         }
                     }
 
-
                     continua = testContinue(tabela);
 
                     var exitVarCorrect = base[exitVar - 1];
@@ -222,18 +229,58 @@
                     // atualiza a base
                     base[exitVar - 1] = enterVar;
 
+                    iteration++;
+
                     $scope.steps.push({
                         enterVar: enterVar,
                         exitVar: exitVarCorrect,
                         base: angular.copy(base),
                         tabela: angular.copy(tabela),
                         continua: continua,
-                        iteration: iteration
+                        iteration: iteration,
+                        limit: iteration >= $scope.initial.iterationLimit
                     });
-
-
-                    iteration++;
                 }
+
+                var basicas = [];
+                var notBasicas = [];
+
+                for (i = 1; i < tabela[0].length - 1; i += 1) {
+                    var indexI = base.indexOf(i);
+                    if (indexI !== -1) {
+                        basicas.push({
+                            var: i,
+                            value: tabela[indexI + 1][tabela[indexI].length - 1]
+                        });
+                    } else {
+                        notBasicas.push(i);
+                    }
+                }
+
+                var reducedCost = [];
+                for (i = 1; i < dVarsLimit; i += 1) {
+                    reducedCost.push({
+                        var: i,
+                        value: -tabela[0][i]
+                    });
+                }
+
+                var shadowPrice = [];
+                for (i = dVarsLimit; i < restLimit; i += 1) {
+                    shadowPrice.push({
+                        var: i,
+                        value: tabela[0][i]
+                    });
+                }
+
+                $scope.otimo = {
+                    base: angular.copy(base),
+                    tabela: angular.copy(tabela),
+                    basicas: basicas,
+                    notBasicas: notBasicas,
+                    shadowPrice: shadowPrice,
+                    reducedCost: reducedCost
+                };
 
                 $scope.initial.locked = true;
                 $scope.showResult = true;

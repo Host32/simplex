@@ -24,6 +24,10 @@
                                 </md-option>
                             </md-select>
                         </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Limite de Iterações</label>
+                            <input aria-label="" type="number" ng-model="initial.iterationLimit" ng-disabled="initial.locked" required>
+                        </md-input-container>
                     </div>
 
                     <h4>Função:</h4>
@@ -66,6 +70,15 @@
         </md-card>
     </form>
 
+    <md-card ng-show="showResult">
+        <md-card-title class="md-padding">
+            <md-card-title-text>
+                <funcao-objetivo objective="initial.objective" decision-vars="decisionVars"></funcao-objetivo>
+                <sujeito-a restrictions="restrictions"></sujeito-a>
+            </md-card-title-text>
+        </md-card-title>
+    </md-card>
+
     <md-tabs ng-show="showResult" class="md-primary md-hue-1" md-selected="selectedIndex">
         <md-tab id="tab1">
             <md-tab-label>Resolução passo a passo</md-tab-label>
@@ -80,22 +93,30 @@
                         <p>x{{step.enterVar}} entra na base e x{{step.exitVar}} sai.</p>
                         <quadro table="step.tabela" base="step.base"></quadro>
                         <p>Continua? {{step.continua ? 'Sim' : 'Não'}}</p>
+                        <strong ng-if="step.limit">LIMITE DE ITERAÇÕES ATINGIDO!</strong>
                     </div>
                 </div>
             </md-tab-body>
         </md-tab>
         <md-tab id="tab2">
-            <md-tab-label>Quadro ótimo</md-tab-label>
-            <md-tab-body>
-                View for Item #2
-                <br/> data.selectedIndex = 1;
-            </md-tab-body>
-        </md-tab>
-        <md-tab id="tab3">
             <md-tab-label>Análise de sensibilidade</md-tab-label>
             <md-tab-body>
-                View for Item #3
-                <br/> data.selectedIndex = 2;
+                <h3>Quadro ótimo</h3>
+                <quadro table='otimo.tabela' base='otimo.base'></quadro>
+
+                <p>Valor de z: {{otimo.tabela[0][otimo.tabela[0].length - 1]}}</p>
+
+                <h3>Variáveis básicas:</h3>
+                <p ng-repeat="basica in otimo.basicas">x{{basica.var}} = {{basica.value}}</p>
+
+                <h3>Variáveis não básicas:</h3>
+                <p ng-repeat="notBasica in otimo.notBasicas">x{{notBasica}} = 0</p>
+
+                <h3>Custos reduzidos:</h3>
+                <p ng-repeat="reducedCost in otimo.reducedCost">x{{reducedCost.var}} = {{reducedCost.value}}</p>
+
+                <h3>Shadow Prices:</h3>
+                <p ng-repeat="shadowPrice in otimo.shadowPrice">x{{shadowPrice.var}} = {{shadowPrice.value}}</p>
             </md-tab-body>
         </md-tab>
         <md-tab id="tab3">

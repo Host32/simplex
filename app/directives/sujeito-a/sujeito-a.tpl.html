@@ -1,0 +1,10 @@
+<h3>Sujeito à:</h3>
+<p ng-repeat="restriction in restrictions">
+    <span ng-repeat="decisionVar in restriction.decisionVars">
+        {{decisionVar.value}}*x{{$index + 1}} <span ng-if="restriction.decisionVars[$index+1] && restriction.decisionVars[$index+1].value >= 0">+</span>
+    </span>
+
+    <span ng-if="restriction.condition==='menor'">&le;</span>
+    <span ng-if="restriction.condition==='maior'">&ge;</span>
+    <span ng-if="restriction.condition==='igual'">=</span> {{restriction.value}}
+</p>
