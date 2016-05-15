@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "",
       "projectGuid": "c7d81b78-d90f-4953-9d79-899f96aef21c",
-      "lastModifiedDate": 1463264108924,
+      "lastModifiedDate": 1463265275459,
       "creationDate": 1463264108826
     },
     "sourceDirectory": "public",
@@ -16,7 +16,15 @@
     "testDirectory": "test",
     "startFile": "index.html",
     "projectTags": [],
-    "projectFiles": {},
+    "projectFiles": {
+      "xdk-publish-meta-data.json": {
+        "settings": {
+          "project": {
+            "XDK-not-deployed": "True"
+          }
+        }
+      }
+    },
     "projectDirectories": {
       "xdk": {
         "settings": {

@@ -1,0 +1,19 @@
+<table>
+    <thead>
+        <tr>
+            <th></th>
+            <th ng-repeat="item in table[0] track by $index">
+                <span ng-if="$index === 0">z</span>
+                <span ng-if="$index !== 0 && $index !== table[0].length - 1">x{{$index}}</span>
+                <span ng-if="$index === table[0].length - 1">b</span>
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="linha in table">
+            <td><span ng-if="$index > 0">x{{base[$index-1]}}</span></td>
+            <td class="{{($parent.$index === 0 ? 'border-bottom ' : '') + ($index === 0 ? 'border-right ' : '') + ($index === linha.length-1 ? 'border-left ': '')}} " ng-repeat="item in linha track by $index">{{item}}</td>
+        </tr>
+    </tbody>
+</table>

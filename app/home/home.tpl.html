@@ -1,8 +1,109 @@
-<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="2:2" md-gutter="12px" md-gutter-gt-sm="8px">
-    <md-grid-tile ng-repeat="gridTitle in homeCtrl.grid" md-rowspan="{{gridTitle.rowSpan}}" md-colspan="{{gridTitle.colSpan}}" md-colspan-sm="1" ng-click="$state.go('posts.detail', { id: gridTitle.id })">
-        <img ng-src="{{gridTitle.imageUrl}}" />
-        <md-grid-tile-footer>
-            <h3>{{gridTitle.title}}</h3>
-        </md-grid-tile-footer>
-    </md-grid-tile>
-</md-grid-list>
+<md-content class="md-padding">
+
+    <form name="firstForm" ng-submit="calculateSimplex()" novalidate>
+        <md-card>
+            <md-card-title class="md-padding">
+                <md-card-title-text>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Variáveis de decisão: </label>
+                            <input aria-label="" type="number" ng-model="initial.decisionVars" ng-disabled="initial.locked" required>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Número de restrições</label>
+                            <input aria-label="" type="number" ng-model="initial.restrictions" ng-disabled="initial.locked" required>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Objetivo</label>
+                            <md-select ng-model="initial.objective" ng-disabled="initial.locked">
+                                <md-option value="max">
+                                    Maximizar
+                                </md-option>
+                                <md-option value="min">
+                                    Minimizar
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                    </div>
+
+                    <h4>Função:</h4>
+                    <div layout-gt-sm="row">
+                        <md-input-container class="md-block" flex-gt-sm ng-repeat="decisionVar in decisionVars">
+                            <label>X{{$index+1}}</label>
+                            <input aria-label="ok" type="number" ng-model="decisionVar.value" ng-disabled="initial.locked" required>
+                        </md-input-container>
+                    </div>
+
+                    <h4>Restrições:</h4>
+                    <div layout-gt-sm="row" ng-repeat="restriction in restrictions">
+                        <md-input-container class="md-block" flex-gt-sm ng-repeat="decisionVar in restriction.decisionVars">
+                            <label>X{{$index+1}}</label>
+                            <input aria-label="ok" type="number" ng-model="decisionVar.value" ng-disabled="initial.locked" required>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <label>Condição</label>
+                            <md-select ng-model="restriction.condition" ng-disabled="initial.locked">
+                                <md-option value="menor">
+                                    &le;
+                                </md-option>
+                                <md-option value="maior">
+                                    &ge;
+                                </md-option>
+                                <md-option value="igual">
+                                    =
+                                </md-option>
+                            </md-select>
+                        </md-input-container>
+                        <md-input-container class="md-block" flex-gt-sm>
+                            <input aria-label="ok" type="number" ng-model="restriction.value" ng-disabled="initial.locked" required>
+                        </md-input-container>
+                    </div>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center" class="md-padding">
+                <md-button class="md-primary md-raised" type="submit">Continuar</md-button>
+            </md-card-actions>
+        </md-card>
+    </form>
+
+    <md-tabs ng-show="showResult" class="md-primary md-hue-1" md-selected="selectedIndex">
+        <md-tab id="tab1">
+            <md-tab-label>Resolução passo a passo</md-tab-label>
+            <md-tab-body>
+                <h3>Quadro inicial:</h3>
+                <quadro table='steps[0].tabela' base='steps[0].base'></quadro>
+                <p>Continua? {{steps[0].continua ? 'Sim' : 'Não'}}</p>
+
+                <div ng-repeat="step in steps">
+                    <div ng-if="$index > 0">
+                        <h3>{{step.iteration}}ª Iteração</h3>
+                        <p>x{{step.enterVar}} entra na base e x{{step.exitVar}} sai.</p>
+                        <quadro table="step.tabela" base="step.base"></quadro>
+                        <p>Continua? {{step.continua ? 'Sim' : 'Não'}}</p>
+                    </div>
+                </div>
+            </md-tab-body>
+        </md-tab>
+        <md-tab id="tab2">
+            <md-tab-label>Quadro ótimo</md-tab-label>
+            <md-tab-body>
+                View for Item #2
+                <br/> data.selectedIndex = 1;
+            </md-tab-body>
+        </md-tab>
+        <md-tab id="tab3">
+            <md-tab-label>Análise de sensibilidade</md-tab-label>
+            <md-tab-body>
+                View for Item #3
+                <br/> data.selectedIndex = 2;
+            </md-tab-body>
+        </md-tab>
+        <md-tab id="tab3">
+            <md-tab-label>Interpretações</md-tab-label>
+            <md-tab-body>
+                View for Item #3
+                <br/> data.selectedIndex = 2;
+            </md-tab-body>
+        </md-tab>
+    </md-tabs>
+</md-content>

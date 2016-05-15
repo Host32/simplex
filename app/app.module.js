@@ -12,8 +12,8 @@
             $urlRouterProvider.otherwise('/');
 
             $mdThemingProvider.theme('default')
-                .primaryPalette('green')
-                .accentPalette('light-green');
+                .primaryPalette('teal')
+                .accentPalette('green');
         }])
         .run(['$rootScope', '$state', '$stateParams', function run($rootScope, $state, $stateParams) {
             $rootScope.$state = $state;
