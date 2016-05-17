@@ -6,7 +6,7 @@
       "projectTypeName": "com.intel.xdk.projecttype.webapp",
       "src": "",
       "projectGuid": "c7d81b78-d90f-4953-9d79-899f96aef21c",
-      "lastModifiedDate": 1463265275459,
+      "lastModifiedDate": 1463487925563,
       "creationDate": 1463264108826
     },
     "sourceDirectory": "public",
@@ -63,7 +63,7 @@
         "splashes_": [],
         "addlPermissions_": "",
         "excludedLibraries_": "",
-        "certificateId_": "",
+        "certificateId_": "v1ANzjk9AEGUugY1qWuHpw2",
         "appVersion_": "0.0.1",
         "appVersionCode_": "1",
         "crosswalkVersion_": "16",
@@ -101,7 +101,9 @@
         "platform_": "windows8",
         "runtime_": "W3C on Cordova",
         "name_": "Windows8",
-        "preferences_": {},
+        "preferences_": {
+          "windows-publisher-id": ""
+        },
         "isActive_": true,
         "appName_": "simplex",
         "appID_": "not.yet.specified",
