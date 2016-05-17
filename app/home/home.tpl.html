@@ -87,10 +87,13 @@
                 <quadro table='steps[0].tabela' base='steps[0].base'></quadro>
                 <p>Continua? {{steps[0].continua ? 'Sim' : 'Não'}}</p>
 
+                <h2 ng-if="twoPhases">Primeira fase</h2>
+
                 <div ng-repeat="step in steps">
                     <div ng-if="$index > 0">
+                        <h2 ng-if="step.secondPhase">Segunda fase</h2>
                         <h3>{{step.iteration}}ª Iteração</h3>
-                        <p>x{{step.enterVar}} entra na base e x{{step.exitVar}} sai.</p>
+                        <p ng-if="step.enterVar">x{{step.enterVar}} entra na base e x{{step.exitVar}} sai.</p>
                         <quadro table="step.tabela" base="step.base"></quadro>
                         <p>Continua? {{step.continua ? 'Sim' : 'Não'}}</p>
                         <strong ng-if="step.limit">LIMITE DE ITERAÇÕES ATINGIDO!</strong>
@@ -117,6 +120,13 @@
 
                 <h3>Shadow Prices:</h3>
                 <p ng-repeat="shadowPrice in otimo.shadowPrice">x{{shadowPrice.var}} = {{shadowPrice.value}}</p>
+
+                <div ng-repeat="variation in otimo.variations">
+                    <h3>Variação de C{{$index+1}}:</h3>
+                    <p ng-if="variation.res">{{variation.res}}</p>
+                    <p ng-repeat="res in variation.indivRes">{{res}}</p>
+                    <p>{{variation.min}} &le; C{{$index+1}} &le; {{variation.max}}</p>
+                </div>
             </md-tab-body>
         </md-tab>
         <md-tab id="tab3">
