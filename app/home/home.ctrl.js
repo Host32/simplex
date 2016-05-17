@@ -15,46 +15,46 @@
 
             function generateRestrictions(amount) {
 
-                $scope.restrictions = [
-                    {
-                        value: 240,
-                        condition: 'menor',
-                        decisionVars: [
-                            {
-                                value: 2
-                            }, {
-                                value: 3
-                            }, {
-                                value: 4
-                            }
-                        ]
-                    }, {
-                        value: 150,
-                        condition: 'menor',
-                        decisionVars: [
-                            {
-                                value: 2
-                            }, {
-                                value: 1
-                            }, {
-                                value: 1
-                            }
-                        ]
-                    }, {
-                        value: 80,
-                        condition: 'menor',
-                        decisionVars: [
-                            {
-                                value: 1
-                            }, {
-                                value: 0
-                            }, {
-                                value: 0
-                            }
-                        ]
-                    }
-                ];
-                return;
+                //                $scope.restrictions = [
+                //                    {
+                //                        value: 240,
+                //                        condition: 'menor',
+                //                        decisionVars: [
+                //                            {
+                //                                value: 2
+                //                            }, {
+                //                                value: 3
+                //                            }, {
+                //                                value: 4
+                //                            }
+                //                        ]
+                //                    }, {
+                //                        value: 150,
+                //                        condition: 'menor',
+                //                        decisionVars: [
+                //                            {
+                //                                value: 2
+                //                            }, {
+                //                                value: 1
+                //                            }, {
+                //                                value: 1
+                //                            }
+                //                        ]
+                //                    }, {
+                //                        value: 80,
+                //                        condition: 'menor',
+                //                        decisionVars: [
+                //                            {
+                //                                value: 1
+                //                            }, {
+                //                                value: 0
+                //                            }, {
+                //                                value: 0
+                //                            }
+                //                        ]
+                //                    }
+                //                ];
+                //                return;
 
 
                 var i, j;
@@ -77,16 +77,16 @@
 
             $scope.$watch('initial.decisionVars', function (newValue, oldValue) {
 
-                $scope.decisionVars = [
-                    {
-                        value: 5
-                    }, {
-                        value: 7
-                    }, {
-                        value: 3
-                    }
-                ];
-                return;
+                //                $scope.decisionVars = [
+                //                    {
+                //                        value: 5
+                //                    }, {
+                //                        value: 7
+                //                    }, {
+                //                        value: 3
+                //                    }
+                //                ];
+                //                return;
 
                 var i;
 
@@ -480,7 +480,9 @@
                     if (linha === -1) {
                         return {
                             min: 0,
-                            max: tabela[0][i + 1]
+                            max: tabela[0][i + 1],
+                            minCalc: elem.value,
+                            maxCalc: elem.value + tabela[0][i + 1]
                         };
                     }
 
@@ -499,12 +501,12 @@
                         div = -tabela[0][coluna] / tabela[linha][coluna];
 
                         if (tabela[linha][coluna] < 0) {
-                            indivRes.push('C' + (i + 1) + ' <= ' + div);
+                            indivRes.push('dC' + (i + 1) + ' <= ' + div);
                             if (div < max) {
                                 max = div;
                             }
                         } else if (tabela[linha][coluna] > 0) {
-                            indivRes.push('C' + (i + 1) + ' >= ' + div);
+                            indivRes.push('dC' + (i + 1) + ' >= ' + div);
                             if (div > min) {
                                 min = div;
                             }
@@ -512,10 +514,12 @@
                     }
 
                     return {
-                        res: 'L1 = L1 + C' + (i + 1) + ' * L' + (linha + 1),
+                        res: 'L1 = L1 + dC' + (i + 1) + ' * L' + (linha + 1),
                         indivRes: indivRes,
                         min: min,
-                        max: max
+                        max: max,
+                        minCalc: elem.value + min,
+                        maxCalc: elem.value + max
                     }
                 });
 
@@ -535,7 +539,7 @@
 
             setTimeout(function () {
                 $scope.$apply(function () {
-                    $scope.calculateSimplex();
+                    //$scope.calculateSimplex();
                 });
             }, 1000);
 

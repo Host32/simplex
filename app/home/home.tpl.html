@@ -122,10 +122,11 @@
                 <p ng-repeat="shadowPrice in otimo.shadowPrice">x{{shadowPrice.var}} = {{shadowPrice.value}}</p>
 
                 <div ng-repeat="variation in otimo.variations">
-                    <h3>Variação de C{{$index+1}}:</h3>
+                    <h3>Variação de dC{{$index+1}}:</h3>
                     <p ng-if="variation.res">{{variation.res}}</p>
                     <p ng-repeat="res in variation.indivRes">{{res}}</p>
-                    <p>{{variation.min}} &le; C{{$index+1}} &le; {{variation.max}}</p>
+                    <p>{{variation.min}} &le; dC{{$index+1}} &le; {{variation.max}}</p>
+                    <p>{{variation.minCalc}} &le; C{{$index+1}} &le; {{variation.maxCalc}}</p>
                 </div>
             </md-tab-body>
         </md-tab>
