@@ -272,10 +272,15 @@
                     var enterVar = enterVariable(tabela, 'min');
                     var exitVar = exitVariable(tabela, enterVar);
 
+                    if (!exitVar || !enterVar) {
+                        continua = false;
+                        break;
+                    }
+
                     // transformacoes lineares
                     var pivo = tabela[exitVar][enterVar];
                     tabela[exitVar] = tabela[exitVar].map(function (elem) {
-                        return elem / pivo;
+                        return Math.fround(elem / pivo);
                     });
 
                     for (i = 0; i < tabela.length; i += 1) {
